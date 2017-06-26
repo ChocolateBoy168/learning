@@ -1,0 +1,76 @@
+//一般寫法:
+var fun2 = {
+	abc:"dd"
+}
+
+
+//this 與 new 寫法:
+var fun1 = function(){
+	this.abc = "dd";
+	this.view=function(){
+		console.log(this);
+	};
+	return this;
+}
+var fun2 = new  fun1();
+
+
+// how to get   10*9*8*7....
+var fun1 = function(val){
+   return val*fun1(val-1);
+}
+console.log( fun1(10) );
+
+
+//this mean who call this function
+var obj = {
+	title:"this is title",
+    fun:function(){
+	     this.title = "this is title 2";
+		 console.log(this);
+	},
+	newfun: new function(){
+			this.title = "this is title 3";
+			console.log(this);
+	}
+}
+
+
+//this搭配new 的用法
+obj = {
+    nodeList:[],node2List:[],
+	node:function(obj){
+      console.log(this);
+      $.extend(true,this,obj);
+      $.extend(true,this,{
+        isBlock:function(){
+          return this.block;
+        },
+        block:true
+      });
+    },
+    node2:function(obj){
+      console.log(this);
+      var result = {};
+      $.extend(true,result,obj);
+      $.extend(true,result,{
+        isBlock:function(){
+          return this.block;
+        },
+        block:true
+      });
+      return result;
+    },
+	initialNodeList:function(){
+	  for(var i = 0 ;i<10;i++){
+        var node = new this.node({url:""+i,titile:"title"+i})
+         this.nodeList.push(node);
+	 }
+    },
+	initialNode2List:function(){
+	  for(var i = 0 ;i<10;i++){
+        var node2 = this.node2({url:""+i,titile:"title"+i})
+         this.node2List.push(node2);
+	 }
+    }
+}
